@@ -1,0 +1,32 @@
+{
+  "name": "calvin-app-multi",
+  "private": true,
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "ts-node scripts/forward-to-packages.ts",
+    "clean": "ts-node scripts/clean-all.ts",
+    "postinstall": "ts-node scripts/forward-to-packages.ts",
+    "test": "ts-node scripts/forward-to-packages.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@bitbucket.org/brinkdevteam/calvin-app.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "UNLICENSED",
+  "homepage": "https://bitbucket.org/brinkdevteam/calvin-app",
+  "devDependencies": {
+    "@types/cross-spawn": "^6.0.0",
+    "@types/glob": "^5.0.35",
+    "@types/node": "^10.5.2",
+    "cross-spawn": "^6.0.5",
+    "glob": "^7.1.2",
+    "ts-node": "^7.0.0",
+    "typescript": "^2.9.2"
+  },
+  "dependencies": {
+    "react-native-input-scroll-view": "^1.7.2"
+  }
+}

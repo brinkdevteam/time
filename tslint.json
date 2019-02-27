@@ -1,0 +1,30 @@
+{
+    "defaultSeverity": "error",
+    "extends": [
+        "tslint:recommended"
+    ],
+    "jsRules": {},
+  "rules": {
+    "arrow-parens": [true, "ban-single-arg-parens"],
+    "max-classes-per-file": false,
+    "max-line-length": false,
+    "member-access": [true, "no-public"],
+    "no-empty-interface": false,
+    "no-floating-promises": true,
+    "no-for-in-array": true,
+    "no-non-null-assertion": true,
+    "no-parameter-reassignment": true,
+    "no-var-requires": false,
+    "prefer-readonly": true,
+    "quotemark": false,
+    "space-before-function-paren": [true, {
+      "anonymous": "always",
+      "asyncArrow": "always",
+      "constructor": "never",
+      "method": "never",
+      "named": "never"
+    }],
+    "strict-boolean-expressions": true
+  },
+    "rulesDirectory": []
+}
