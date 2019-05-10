@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+      "baseUrl": ".",
+      "paths": { "*": ["types/*"] },
+      "emitDecoratorMetadata": true,
+      "experimentalDecorators": true,
+      "lib": ["es2017"],
+      "module": "commonjs",
+      "noUnusedLocals": true,
+      "strict": true,
+      "strictFunctionTypes": false,
+      "target": "ES2017"
+    }
+  }
+  

@@ -27,5 +27,8 @@
     "lerna": "^3.13.0",
     "ts-node": "^8.0.2",
     "typescript": "^3.3.3333"
+  },
+  "dependencies": {
+    "express": "^4.16.4"
   }
 }

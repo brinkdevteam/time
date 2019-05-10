@@ -1,0 +1,7 @@
+0 silly argv { _: [ 'bootstrap' ], lernaVersion: '3.13.0', '$0': 'lerna' }
+1 notice cli v3.13.0
+2 verbose rootPath /Users/Aaron/Documents/local-development/time
+3 error JSONError: Unexpected token } in JSON at position 653 while parsing near '...ress": "^4.16.3",  },  "author": "", ...' in packages/task-tracking-api/package.json
+3 error     at module.exports (/usr/local/lib/node_modules/lerna/node_modules/parse-json/index.js:26:19)
+3 error     at parse (/usr/local/lib/node_modules/lerna/node_modules/load-json-file/index.js:8:29)
+3 error     at pify.then.data (/usr/local/lib/node_modules/lerna/node_modules/load-json-file/index.js:10:67)
