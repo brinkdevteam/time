@@ -19,7 +19,7 @@
   "license": "MIT",
   "homepage": "https://github.com/brinkdevteam/time",
   "devDependencies": {
-    "@types/cross-spawn": "^6.0.5",
+    "@types/cross-spawn": "^6.0.0",
     "@types/glob": "^5.0.35",
     "@types/node": "^11.9.5",
     "cross-spawn": "^6.0.5",

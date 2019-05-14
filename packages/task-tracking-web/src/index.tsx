@@ -5,7 +5,7 @@ import './index.css';
 import App from './App';
 import AxiosProvider, { IAxiosInfo } from './components/utils/AxiosProvider';
 
-import * as serviceWorker from './serviceWorker';
+import registerServiceWorker from './registerServiceWorker';
 
 const buildAxiosInfo = (info: IAxiosInfo) => {
   return {
@@ -26,4 +26,4 @@ ReactDOM.render(
   document.getElementById('root') as HTMLElement
 );
 
-serviceWorker.register();
+registerServiceWorker();

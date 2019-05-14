@@ -5,7 +5,7 @@ import {
 } from 'typeorm';
 
 @Entity()
-export default class EventSource {
+export default class EventType {
   @PrimaryGeneratedColumn()
   id: number = -1;
 

@@ -24,7 +24,7 @@
   "dependencies": {
     "@types/passport": "^1.0.0",
     "axios": "^0.18.0",
-    "express": "^4.16.3",
+    "express": "^4.16.4",
     "passport": "^0.4.0",
     "passport-gitlab2": "^5.0.0",
     "pg": "^7.8.1",

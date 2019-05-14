@@ -10,6 +10,7 @@ export default class User {
   id: number = -1;
 
   @Column({
+    nullable: true,
     type: 'varchar',
   })
   name?: string = "";

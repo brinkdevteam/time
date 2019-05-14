@@ -8,4 +8,4 @@ const server = express();
 
 server.use(app);
 
-server.listen(3001);
+server.listen(80);

@@ -31,9 +31,9 @@ export const managerPromise = (async () => {
 
 // THE FOLLOWING COMMENTED OUT IS COPY AND PASTED FROM GRIT LEADERSHIP'S express.ts
 
-// function coalesce<T>(value: T|undefined, valueIfUndefined: T): T {
-//   return value === undefined ? valueIfUndefined : value;
-// }
+function coalesce<T>(value: T|undefined, valueIfUndefined: T): T {
+  return value === undefined ? valueIfUndefined : value;
+}
 
 // const userCache = transientObjectCache<{
 //   value?: User;
@@ -72,44 +72,47 @@ export const managerPromise = (async () => {
 // }
 
 // // Promise wrapper for express.
-// type PromiseRequestHandler<T> = (req: Request, res: Response, next: NextFunction) => Promise<T>;
-// function promiseHandler<T = void>(handlerAsync: PromiseRequestHandler<T>): RequestHandler {
-//   return async (req: express.Request, res: express.Response, next: express.NextFunction) => {
-//     // Track if next() was called by intercepting it. This way, we can
-//     // check if the Promise was resolved too early or not. The Promise
-//     // should only be resolved if the handler fully handled the
-//     // request *or* if it called next() to pass the buck.
-//     let nextCalled = false;
-//     let endCalled = false;
-//     const replacedEnd = res.end;
-//     // tslint:disable-next-line:ban-types
-//     res.end = function (chunk?: string|Buffer|Function, encoding?: string|Function, callback?: Function) {
-//       endCalled = true;
-//       replacedEnd.call(this, chunk, encoding, callback);
-//     };
-//     try {
-//       const response = await handlerAsync(req, res, ex => {
-//         nextCalled = true;
-//         next(ex);
-//       });
-//       if (response !== undefined) {
-//         if (nextCalled || endCalled) {
-//           throw new Error(`Handler ${coalesce<string>(handlerAsync.name, '«anonymous»')}() returned a value even though it had already called res.end() or next(). Did you return something from a handler unintentionally?`);
-//         }
-//         res.json(response);
-//       }
-//       // If we got here and the handler did not call next or did not
-//       // call res.end(), that means it left the request hanging or
-//       // that it is missing an await. To keep code clean, we require
-//       // either condition or throw.
-//       if (!nextCalled && !endCalled) {
-//         throw new Error(`Handler ${coalesce<string>(handlerAsync.name, '«anonymous»')}() resolved prior to calling res.end() or next(). Did you forget an await or set up a pipe() without waiting for its end event?`);
-//       }
-//     } catch (ex) {
-//       next(ex);
-//     }
-//   };
-// }
+type PromiseRequestHandler<T> = (req: express.Request, res: express.Response, next: express.NextFunction) => Promise<T>;
+export function promiseHandler<T = void>(handlerAsync: PromiseRequestHandler<T>): express.RequestHandler {
+  return async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+    // Track if next() was called by intercepting it. This way, we can
+    // check if the Promise was resolved too early or not. The Promise
+    // should only be resolved if the handler fully handled the
+    // request *or* if it called next() to pass the buck.
+    let nextCalled = false;
+    let endCalled = false;
+    const replacedEnd = res.end;
+    // tslint:disable-next-line:ban-types
+    res.end = function (chunk?: string|Buffer|Function, encoding?: string|Function, callback?: () => void) {
+      endCalled = true;
+      if (typeof encoding === 'function') {
+        throw new Error('bad type for encoding: function');
+      }
+      replacedEnd.call(this, chunk, encoding, callback);
+    };
+    try {
+      const response = await handlerAsync(req, res, ex => {
+        nextCalled = true;
+        next(ex);
+      });
+      if (response !== undefined) {
+        if (nextCalled || endCalled) {
+          throw new Error(`Handler ${coalesce<string>(handlerAsync.name, '«anonymous»')}() returned a value even though it had already called res.end() or next(). Did you return something from a handler unintentionally?`);
+        }
+        res.json(response);
+      }
+      // If we got here and the handler did not call next or did not
+      // call res.end(), that means it left the request hanging or
+      // that it is missing an await. To keep code clean, we require
+      // either condition or throw.
+      if (!nextCalled && !endCalled) {
+        throw new Error(`Handler ${coalesce<string>(handlerAsync.name, '«anonymous»')}() resolved prior to calling res.end() or next(). Did you forget an await or set up a pipe() without waiting for its end event?`);
+      }
+    } catch (ex) {
+      next(ex);
+    }
+  };
+}
 
 // // ts
 // interface IQueryShape {
@@ -184,7 +187,7 @@ const api = express();
 //   store: typeormSessionStore,
 // }));
 
-// api.use(express.json());
+api.use(express.json());
 
 // api.use((req, res, next) => {
 //   // By default use Cache-Control: max-age=0. APIs whose responses

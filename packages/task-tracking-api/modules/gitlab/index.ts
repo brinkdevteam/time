@@ -12,6 +12,7 @@ import passport = require('passport');
 import dbPromise from './../../db';
 const GitLabStrategy = require('passport-gitlab2');
 import EventSource from "../../entities/EventSource.entity";
+import { promiseHandler } from './../../express';
 // import EventSourceProvideType from '../../entities/EventSourceProvideType.entity';
 // import EventType from '../../entities/EventType.entity';
 
@@ -27,7 +28,7 @@ const managerPromise = (async () => {
 //
 // Initialize Module (called after user authorization)
 //
-gitlab.route('/gitlab/initialize').get(async (req: any, res: any) => {
+// gitlab.route('/gitlab/initialize').get(async (req: any, res: any) => {
   // const manager = await managerPromise;
   // const gitlabSource = await manager.findOne(EventSource, {name: 'gitlab'});
   // const gitlabSourceId = gitlabSource !== undefined ? gitlabSource.id : 0;
@@ -42,7 +43,7 @@ gitlab.route('/gitlab/initialize').get(async (req: any, res: any) => {
   // Associate Gitlab event types
   // await manager.save(EventSourceProvideType, {sourceId: gitlabSourceId, eventTypeId: gitlabTaskType.id});
   // await manager.save(EventSourceProvideType, {sourceId: gitlabSourceId, eventTypeId: gitlabProjectType.id});
-});
+// });
 
 //
 // AUTHENTICATION
@@ -83,7 +84,7 @@ gitlab.get('/gitlab/auth/callback',
 //
 // Tasks API
 //
-gitlab.route('/gitlab/task/').get(async (req: any, res: any) => {
+gitlab.route('/gitlab/task/').get(promiseHandler(async (res: any, req: any) => {
   const manager = await managerPromise;
   const source = await manager.findOneOrFail(EventSource, {name: "Gitlab", userId: 1});
   axios.get('https://gitlab.brinkdevelopmentllc.com/api/v4/issues', {
@@ -94,8 +95,8 @@ gitlab.route('/gitlab/task/').get(async (req: any, res: any) => {
   }).then(result => {
     res.json({task: result});
 // tslint:disable-next-line: no-console
-  }).catch(err => console.log('error!' + err) );
-});
+  }).catch(err => console.log('promise error!!!!' + err) );
+}));
 //
 // Provide source (push, commits)
 //
