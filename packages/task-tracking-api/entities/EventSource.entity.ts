@@ -24,6 +24,12 @@ import {
 
     @Column({
       nullable: true,
+      type: 'varchar',
+    })
+    refreshToken: string = "";
+
+    @Column({
+      nullable: true,
       type: 'int',
     })
     userId: number = -1;
