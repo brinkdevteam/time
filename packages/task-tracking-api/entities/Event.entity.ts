@@ -21,9 +21,8 @@ import {
     sourceId: number = -1;
 
     @Column({
-        default: '',
-        nullable: true,
-        type: 'text',
+        default: {},
+        type: 'jsonb',
     })
-    data: string = '';
+    data: object = {};
   }

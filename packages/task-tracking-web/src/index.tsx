@@ -16,6 +16,7 @@ const buildAxiosInfo = (info: IAxiosInfo) => {
     },
   };
 };
+console.log('adfa' + process.env.PUBLIC_URL);
 
 ReactDOM.render(
   <AxiosProvider buildAxiosInfo={buildAxiosInfo}>

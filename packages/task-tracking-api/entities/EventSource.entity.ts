@@ -10,7 +10,6 @@ import {
     id: number = -1;
 
     @Column({
-      nullable: true,
       type: 'varchar',
       unique: true,
     })
@@ -27,6 +26,12 @@ import {
       type: 'varchar',
     })
     refreshToken: string = "";
+
+    @Column({
+      nullable: true,
+      type: 'varchar',
+    })
+    tokenExpireTimestamp: string = "";
 
     @Column({
       nullable: true,

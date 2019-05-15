@@ -1,21 +1,21 @@
-import {
-  Column,
-  Entity,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+// import {
+//   Column,
+//   Entity,
+//   PrimaryGeneratedColumn,
+// } from 'typeorm';
 
-@Entity()
-export default class User {
-  @PrimaryGeneratedColumn()
-  id: number = -1;
+// @Entity()
+// export default class Task {
+//   @PrimaryGeneratedColumn()
+//   id: number = -1;
 
-  @Column({
-    type: 'varchar',
-  })
-  name?: string = "";
+//   @Column({
+//     type: 'varchar',
+//   })
+//   name?: string = "";
 
-  @Column({
-    type: 'int',
-  })
-  parentId?: number = 0;
-}
+//   @Column({
+//     type: 'int',
+//   })
+//   startDate?: number = 0;
+// }

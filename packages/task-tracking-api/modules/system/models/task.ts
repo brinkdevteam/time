@@ -1,5 +1,6 @@
 import {
   Number,
+  Partial,
   Record,
   Static,
   String,
@@ -9,15 +10,15 @@ import {
 // Event Definitions
 //
 export const ITaskEvent = Record({
+  endTime: Number,
   name: String,
   startTime: Number,
-  // tslint:disable-next-line: object-literal-sort-keys
-  endTime: Number,
   taskId: Number,
-  projectId: Number,
+}).And(Partial({
   goalId: Number,
+  projectId: Number,
   vauleId: Number,
-});
+}));
 
 export default interface ITaskEventData extends Static<typeof ITaskEvent> {
 }
