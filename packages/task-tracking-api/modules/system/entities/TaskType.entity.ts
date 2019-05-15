@@ -5,7 +5,7 @@ import {
 } from 'typeorm';
 
 @Entity()
-export default class Project {
+export default class TaskType {
   @PrimaryGeneratedColumn()
   id: number = -1;
 
@@ -13,9 +13,4 @@ export default class Project {
     type: 'varchar',
   })
   name?: string = "";
-
-  @Column({
-    type: 'int',
-  })
-  parentId?: number = 0;
 }

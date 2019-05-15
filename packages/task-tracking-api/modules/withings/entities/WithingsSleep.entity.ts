@@ -5,7 +5,7 @@ import {
 } from 'typeorm';
 
 @Entity()
-export default class Project {
+export default class WithingsSleep {
   @PrimaryGeneratedColumn()
   id: number = -1;
 
@@ -17,5 +17,5 @@ export default class Project {
   @Column({
     type: 'int',
   })
-  parentId?: number = 0;
+  taskId?: number = 0;
 }

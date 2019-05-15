@@ -11,7 +11,7 @@ import passport = require('passport');
 // import User from '../../entities/User';
 import dbPromise from './../../db';
 const GitLabStrategy = require('passport-gitlab2');
-import EventSource from "../../entities/EventSource.entity";
+import Source from "../../entities/Source.entity";
 import { promiseHandler } from './../../express';
 // import EventSourceProvideType from '../../entities/EventSourceProvideType.entity';
 // import EventType from '../../entities/EventType.entity';
@@ -60,7 +60,7 @@ passport.use(new GitLabStrategy({
 // tslint:disable-next-line: no-console
     console.log("Token" + token);
     const manager = await managerPromise;
-    await manager.save(EventSource, {name: "Gitlab", authToken: token, userId: 1});
+    await manager.save(Source, {name: "Gitlab", authToken: token, userId: 1});
 // tslint:disable-next-line: no-unused-expression
     cb(null, tokenSecret);
 },
@@ -86,7 +86,7 @@ gitlab.get('/gitlab/auth/callback',
 //
 gitlab.route('/gitlab/task/').get(promiseHandler(async (res: any, req: any) => {
   const manager = await managerPromise;
-  const source = await manager.findOneOrFail(EventSource, {name: "Gitlab", userId: 1});
+  const source = await manager.findOneOrFail(Source, {name: "Gitlab", userId: 1});
   axios.get('https://gitlab.brinkdevelopmentllc.com/api/v4/issues', {
     headers: {
       Authorization: `Bearer ${source.authToken}`,

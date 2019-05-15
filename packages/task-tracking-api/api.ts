@@ -4,7 +4,6 @@
 //     RequestHandler,
 //     Response,
 //   } from 'express';
-// import EventSource from "./entities/EventSource.entity";
 import EventSourceProvideType from './entities/EventSourceProvideType.entity';
 import api, {
     managerPromise,
