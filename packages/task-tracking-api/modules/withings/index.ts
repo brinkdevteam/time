@@ -91,7 +91,6 @@ const checkAuthorization = promiseHandler(async (req, res, next) => {
     console.log('1');
     if (parseInt(eventSource.tokenExpireTimestamp, 10) < Date.now() ) {
       // refresh token
-      try {
         const data = {
           client_id: withingsConfig.client_id,
           client_secret: withingsConfig.client_secret,
@@ -105,19 +104,21 @@ const checkAuthorization = promiseHandler(async (req, res, next) => {
           data: qs.stringify(data),
           url: 'https://account.withings.com/oauth2/token',
         });
-        await manager.update(Source, { name: 'Withings', userId: 1}, {
-          authToken: response.data.access_token,
-          refreshToken: response.data.refresh_token,
-          tokenExpireTimestamp: (Date.now() + response.data.expires_in * 1000).toString(),
-        });
-        next();
-        return;
-      } catch (ex) {
+        if (response.data.access_token) {
+          await manager.update(Source, { name: 'Withings', userId: 1}, {
+            authToken: response.data.access_token,
+            refreshToken: response.data.refresh_token,
+            tokenExpireTimestamp: (Date.now() + response.data.expires_in * 1000).toString(),
+          });
+          next();
+          return;
+        }
         // try reseting Withings auth and refresh token in database
         await manager.update(Source, {name: 'Withings'}, {authToken: "", refreshToken: ""});
         res.redirect('/api/module/withings/auth');
-      }
     }
+    next();
+    return;
   }
   res.redirect('/api/module/withings/auth');
   // no withings in db => redirect res to /withings/auth/
@@ -181,7 +182,7 @@ withings.get('/withings/sleep', checkAuthorization, promiseHandler(async (req, r
   }
   // a SLEEP EVENT was found, request new sleep from last received sleep event
   // tslint:disable-next-line: no-console
-  console.log('Sleep events found. Uncomment code below this log message to implement fetching new sleep ');
+  console.log('Sleep events found. Uncomment code below this log message to implement fetching new sleep');
   // tslint:disable-next-line: no-console
   // await axios({
   //   method: "POST",

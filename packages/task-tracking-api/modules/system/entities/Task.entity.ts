@@ -15,6 +15,7 @@ export default class Task {
   type?: number = 0;
 
   @Column({
+    nullable: true,
     type: 'varchar',
   })
   name?: string = "";
