@@ -37,7 +37,7 @@
     "promise-delay-ts": "^1.0.0",
     "qs": "^6.7.0",
     "runtypes": "^3.1.2",
-    "typeorm": "^0.2.14"
+    "typeorm": "^0.2.25"
   },
   "license": "MIT"
 }
